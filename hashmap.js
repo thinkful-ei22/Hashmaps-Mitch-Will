@@ -102,27 +102,76 @@ lor.set('Ent', 'Treebeard');
 
 function palindromeCheck(str){
   let hash = new HashMap();
-  hash.set(str[0]);
+  hash.set(str[0], 1);
   for(let i=1; i < str.length; i++){
     // console.log(hash.get(str[i]));
-    if(hash.get(str[i])){
+
+    try{hash.set(str[i], hash.get(str[i]) + 1 );
+    } catch(error){
+
       hash.set(str[i], 1);
     }
+    // if(hash.get(str[i])){
+    //   hash.set(str[i], 1);
+    // }
    
-    hash.set(str[i], hash.get(str[i]) + 1 );
+    // hash.set(str[i], hash.get(str[i]) + 1 );
   }
-  console.log(hash);
-  // let single = 0;
-  // for(let i=0; i < hash.length; i++){
-  
-  //   if(hash.get(hash[i]) % 2 !== 0 ){
-  //     single++;
-  //   }
-  // }
-  // if( single <= 1 ){
-  //   return true;
-  //}
-  // return false;
+  // console.log(hash);
+  // console.log(hash._slots.length);
+
+  let single = 0;
+  for(let j=0; j < hash._slots.length; j++){
+  //console.log(hash._slots[i]);
+    //.value on line 127 threw error
+    if(hash._slots[j] !== undefined){
+     
+      if(hash._slots[j].value % 2 !== 0){ 
+        //console.log(hash._slots[j].value);
+        single++;
+      }
+    
+    }
+  }
+  console.log(single);
+  if( single <= 1 ){
+    return true;
+  }
+  return false;
 }
 
-console.log(palindromeCheck('rraceca'));
+//console.log(palindromeCheck('rraceca'));
+// console.log(palindromeCheck('rraceca'));
+// console.log(palindromeCheck('rxfaceca'));
+//hash.get(strings[i].split('').sort())
+
+function anagram(strings){
+  let hash = new HashMap();
+  for(let i = 0; i < strings.length; i++){
+  
+    const key = strings[i].split('').sort().join('');
+    try {  
+     
+      const variations = hash.get(key);
+      //**** */
+      variations.push(strings[i]);
+      hash.set(key, variations);
+
+    } catch(error) {
+      //console.log(new)
+  
+      hash.set(key, [strings[i]]);
+    }
+
+  }
+  //console.log(hash._slots);
+  for(let i=0; i < hash._slots.length; i++){
+    if(hash._slots[i] !== undefined){
+      console.log(hash._slots[i].value);
+    }
+  }
+}
+
+
+
+//anagram(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']);
